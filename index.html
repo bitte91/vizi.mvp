@@ -8,16 +8,8 @@
   <link rel="manifest" href="/manifest.webmanifest" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Tailwind customization (opcional)
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { inter: ['Inter', 'ui-sans-serif', 'system-ui'] }
-        }
-      }
-    }
+    tailwind.config = { theme: { extend: { fontFamily: { inter: ['Inter','ui-sans-serif','system-ui'] }}}}
   </script>
-  <!-- Carrega variáveis em runtime: copie public/env.example.js -> public/env.js e preencha -->
   <script src="/env.js"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">

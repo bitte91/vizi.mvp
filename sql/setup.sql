@@ -1,21 +1,18 @@
--- Tabela de perfis + RLS + trigger para preencher automaticamente no signup
+-- perfis + RLS + trigger (igual pacote anterior)
 create table if not exists public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   full_name text,
   avatar_url text,
   is_verified boolean default false,
-  created_at timestamp with time zone default now()
+  created_at timestamptz default now()
 );
-
 alter table public.profiles enable row level security;
 
-create policy "Qualquer um pode ler perfis públicos"
-  on public.profiles for select
-  using (true);
+create policy if not exists "profiles: read public"
+  on public.profiles for select using (true);
 
-create policy "Usuário atual pode alterar o próprio perfil"
-  on public.profiles for update
-  using (auth.uid() = id);
+create policy if not exists "profiles: update own"
+  on public.profiles for update using (auth.uid() = id);
 
 create or replace function public.handle_new_user()
 returns trigger as $$
