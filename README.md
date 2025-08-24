@@ -1,42 +1,30 @@
-# Conecta Bairro – MVP (SPA + PWA)
+# Conecta Bairro — MVP com Supabase Auth (verificação por e-mail)
 
-**Mobile-first, PT-BR, focado em vizinhanças brasileiras.**
+Este pacote adiciona **Login/Cadastro** com Supabase + checagem de **e-mail confirmado** (e, opcionalmente, uma verificação manual `profiles.is_verified`) ao seu MVP.
 
-## Rodando localmente
-```bash
-npm install
-npm run dev
-```
+## Como usar (passo a passo rápido)
+1. **Descompacte** este ZIP e abra a pasta no VS Code.
+2. Em `public/env.example.js` **copie para** `public/env.js` e preencha `SUPABASE_URL` e `SUPABASE_ANON_KEY` do seu projeto Supabase.
+3. No painel do Supabase, em **SQL Editor**, cole o conteúdo de `sql/setup.sql` e **execute** (cria a tabela `profiles`, ativa RLS e configura o gatilho de cadastro).
+4. **Rodar local**:
+   ```bash
+   npm install
+   npm run dev
+   ```
+   Acesse: `http://localhost:5173`
+5. **Build**: `npm run build` → gera `dist/` (Vercel aponta para esse diretório).
 
-> Tailwind é carregado via CDN neste MVP para simplificar o bootstrap. Em produção, recomendo configurar PostCSS/Tailwind para tree-shaking.
+> Dica: se quiser exigir **verificação manual** além do e-mail confirmado (moderador precisa aprovar), edite `src/main.js` e mude `window.ENFORCE_MANUAL_VERIFICATION = true`.
 
-## Build (Vercel)
-- Projeto é uma SPA com Vite (config mínima). Deploy direto no Vercel apontando o diretório raiz.
-- Defina o comando de build: `vite build` e output `dist/`.
+## O que vem pronto
+- SPA simples com rota `/#/login` e `/#/` (dashboard).
+- **Cadastro** (`signUp`) que envia e-mail de confirmação e **Login** (`signInWithPassword`).
+- Banner informando se o **e-mail ainda não está confirmado**.
+- (Opcional) Restrições extras caso `profiles.is_verified` não seja `true`.
 
-## Funcionalidades deste MVP
-- **Onboarding**: nome, bairro, CEP e interesses salvos em `localStorage`.
-- **Mural**: criar/ler posts com imagem opcional, reportar conteúdo.
-- **Marketplace**: anúncios com preço/imagem, contato por **WhatsApp**.
-- **Segurança**: botão de **pânico** (compartilha SOS via Web Share / cópia), cadastro rápido de contatos de apoio, atalhos para 190 e pets.
-- **Agenda**: base para eventos (persistência local) e link “Adicionar ao Google Calendar” (via URL).
-- **Perfil**: edição de dados e preferências.
-- **PWA**: manifest + service worker simples (offline do shell e cache de GET).
+## Importante
+- Em projetos hospedados, o Supabase **costuma exigir confirmação de e-mail** para autenticar. Ajuste em **Auth → Providers → Email** e **Auth → URL Configuration**.
+- Personalize os templates de e-mail no Supabase (logo, cores, remetente).
 
-## Estrutura
-- `src/pages`: Painel, Mural, Marketplace, Seguranca, Perfil, Onboarding
-- `src/components`: UI reutilizável (cards, modal, toasts)
-- `src/services/api.js`: stub de dados usando `localStorage`
-- `public/icons`: ícones da PWA
-- `sw.js` e `manifest.webmanifest`
-
-## Próximos passos (sugestão)
-- **Auth real** (Firebase Auth / Supabase).
-- **Backend serverless** (Railway / Cloudflare / Vercel Functions) com PostgreSQL.
-- **Upload de imagens**: R2 / Firebase Storage.
-- **Push Notifications**: Web Push + service worker.
-- **Moderação**: fila/flags + painel admin.
-- **Integrações**: CEP (CEP Aberto), clima (INMET), vagas (SINE).
-
-## Licença
-MIT
+---
+Gerado em 2025-08-24T13:37:57
