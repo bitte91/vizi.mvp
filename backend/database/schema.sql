@@ -1,0 +1,2 @@
+-- Esquema inicial (quando migrar para PostgreSQL)
+-- CREATE TABLE ...;
