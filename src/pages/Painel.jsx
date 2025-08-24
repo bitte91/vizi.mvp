@@ -1,10 +1,32 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { listEvents } from '../services/api'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSupabase } from '../contexts/SupabaseContext';
+import { toast } from '../components/Toast';
 
 export default function Painel() {
-  const [events, setEvents] = React.useState([])
-  React.useEffect(() => { listEvents().then(setEvents) }, [])
+  const { supabase } = useSupabase();
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .order('start', { ascending: true });
+
+      if (error) {
+        // It's okay if the table doesn't exist yet
+        if (error.code !== '42P01') {
+            toast('Erro ao carregar eventos.', false);
+        }
+      } else {
+        setEvents(data);
+      }
+    };
+
+    fetchEvents();
+  }, [supabase]);
+
   return (
     <div className="p-4 space-y-4">
       <section className="bg-gradient-to-br from-brand to-sky-600 text-white rounded-2xl p-4">
@@ -30,5 +52,5 @@ export default function Painel() {
         </ul>
       </section>
     </div>
-  )
+  );
 }
