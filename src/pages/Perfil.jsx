@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSupabase } from '../contexts/SupabaseContext';
-import { toast } from '../components/Toast';
+import { toast } from '../components/Toasts';
 
 export default function Perfil() {
   const { supabase, user } = useSupabase();

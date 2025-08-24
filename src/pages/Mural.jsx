@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSupabase } from '../contexts/SupabaseContext';
-import { toast } from '../components/Toast';
+import { toast } from '../components/Toasts';
 import Modal from '../components/Modal';
 
 function PostCard({ post, user, onDelete }) {

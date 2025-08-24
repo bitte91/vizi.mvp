@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSupabase } from '../contexts/SupabaseContext';
-import { toast } from '../components/Toast';
+import { toast } from '../components/Toasts';
 
 export default function Painel() {
   const { supabase } = useSupabase();

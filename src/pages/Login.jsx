@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSupabase } from '../contexts/SupabaseContext';
-import { toast } from '../components/Toast';
+import { toast } from '../components/Toasts';
 import { useNavigate } from 'react-router-dom';
 
 export function Login() {
